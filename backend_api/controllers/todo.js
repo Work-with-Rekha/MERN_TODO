@@ -2,6 +2,10 @@ import Todo from "../models/todo.js";
 
 export const createTodo = async (req, res) => {
   try {
+    if (!req.body.todo) {
+      return res.status(400).json({ message: "Todo is required" });
+    }
+
     const newTodo = new Todo({
       todo: req.body.todo,
     });
@@ -15,7 +19,7 @@ export const createTodo = async (req, res) => {
 
 export const getAllTodos = async (req, res) => {
   try {
-    const todos = await Todo.find();
+    const todos = await Todo.find().select("-__v");
 
     res.status(200).json(todos);
   } catch (error) {

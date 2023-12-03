@@ -1,0 +1,8 @@
+#myButton {
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Style when the button is active (clicked) */
+#myButton:active {
+  background-color: #1a365d; /* Change to a darker shade */
+}
