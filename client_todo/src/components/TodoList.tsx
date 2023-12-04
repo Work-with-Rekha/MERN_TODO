@@ -12,10 +12,13 @@ const TodoList = ({ getFetchedTodos }: TodoListProps) => {
 
   return (
     <ul className="mx-20">
-      {todos.map((todoObj: Todo) => {
-        const { _id, todo, isCompleted } = todoObj;
-        return <TodoItem key={_id} getFetchedTodos={getFetchedTodos} _id={_id} todo={todo} isCompleted={isCompleted} />;
-      })}
+      {todos?.length > 0 &&
+        todos?.map((todoObj: Todo) => {
+          const { _id, todo, isCompleted } = todoObj;
+          return (
+            <TodoItem key={_id} getFetchedTodos={getFetchedTodos} _id={_id} todo={todo} isCompleted={isCompleted} />
+          );
+        })}
     </ul>
   );
 };

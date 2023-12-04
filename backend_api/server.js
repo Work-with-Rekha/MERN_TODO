@@ -19,7 +19,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use("/user", userRouter);
-app.use("/api", todoRouter);
+app.use("/todo", todoRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
