@@ -2,8 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import Todo from "./models/todo.js";
 import todoRouter from "./routes/todo.js";
+import userRouter from "./routes/user.js";
 
 dotenv.config();
 
@@ -18,6 +18,7 @@ mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.log(err));
 
+app.use("/user", userRouter);
 app.use("/api", todoRouter);
 
 const PORT = process.env.PORT || 5000;
