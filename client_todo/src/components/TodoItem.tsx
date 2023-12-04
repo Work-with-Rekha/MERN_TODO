@@ -10,12 +10,21 @@ type TodoItemProps = {
   getFetchedTodos: () => void;
 };
 
-const TodoItem = ({ _id, isCompleted, todo, getFetchedTodos }: TodoItemProps) => {
+const TodoItem = ({
+  _id,
+  isCompleted,
+  todo,
+  getFetchedTodos,
+}: TodoItemProps) => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
 
   const contentRef = useRef<HTMLParagraphElement>(null);
 
-  const handleCheckedTodo = async (e: BaseSyntheticEvent, todo: string, todoId: string) => {
+  const handleCheckedTodo = async (
+    e: BaseSyntheticEvent,
+    todo: string,
+    todoId: string
+  ) => {
     await updateCheckBox(todo, e.target.checked, todoId).then(() => {
       getFetchedTodos();
     });
@@ -54,8 +63,16 @@ const TodoItem = ({ _id, isCompleted, todo, getFetchedTodos }: TodoItemProps) =>
   return (
     <li className="flex justify-start ">
       <div className="flex gap-2 flex-1">
-        <input type="checkbox" onChange={(e) => handleCheckedTodo(e, todo, _id)} checked={isCompleted} />
-        <p ref={contentRef} contentEditable={isEditable}>
+        <input
+          type="checkbox"
+          onChange={(e) => handleCheckedTodo(e, todo, _id)}
+          checked={isCompleted}
+        />
+        <p
+          ref={contentRef}
+          contentEditable={isEditable}
+          className={isCompleted ? "line-through" : ""}
+        >
           {todo}
         </p>
       </div>

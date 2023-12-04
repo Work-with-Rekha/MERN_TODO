@@ -21,11 +21,18 @@ async function fetchTodos() {
 
 async function addTodo(todoBody: Partial<Todo>) {
   try {
-    const response = await axiosApi.post("/todo/create", JSON.stringify(todoBody), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const token = String(localStorage.getItem("access_token"));
+    const cleanToken = token?.replace(/"/g, "");
+    const response = await axiosApi.post(
+      "/todo/create",
+      JSON.stringify(todoBody),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + cleanToken,
+        },
+      }
+    );
 
     toast.success(response?.data?.message);
   } catch (error: any) {
@@ -33,17 +40,29 @@ async function addTodo(todoBody: Partial<Todo>) {
   }
 }
 
-async function updateCheckBox(todo: string, isCompleted: boolean, todoId: string) {
+async function updateCheckBox(
+  todo: string,
+  isCompleted: boolean,
+  todoId: string
+) {
   try {
+    const token = String(localStorage.getItem("access_token"));
+    const cleanToken = token?.replace(/"/g, "");
+
     const updatedTodo = {
       todo: todo,
       isCompleted: isCompleted,
     };
-    const response = await axiosApi.put(`/todo/update/${todoId}`, JSON.stringify(updatedTodo), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axiosApi.put(
+      `/todo/update/${todoId}`,
+      JSON.stringify(updatedTodo),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + cleanToken,
+        },
+      }
+    );
     toast.success(response?.data?.message);
   } catch (error: any) {
     handleError(error);
@@ -52,15 +71,23 @@ async function updateCheckBox(todo: string, isCompleted: boolean, todoId: string
 
 async function updateTodo(todo: string, isCompleted: boolean, todoId: string) {
   try {
+    const token = String(localStorage.getItem("access_token"));
+    const cleanToken = token?.replace(/"/g, "");
+
     const updatedTodo = {
       todo: todo,
       isCompleted: isCompleted,
     };
-    const response = await axiosApi.put(`/todo/update/${todoId}`, JSON.stringify(updatedTodo), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axiosApi.put(
+      `/todo/update/${todoId}`,
+      JSON.stringify(updatedTodo),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + cleanToken,
+        },
+      }
+    );
     toast.success(response?.data?.message);
   } catch (error: any) {
     handleError(error);
@@ -69,9 +96,13 @@ async function updateTodo(todo: string, isCompleted: boolean, todoId: string) {
 
 async function deleteTodo(todoId: string) {
   try {
+    const token = String(localStorage.getItem("access_token"));
+    const cleanToken = token?.replace(/"/g, "");
+
     const response = await axiosApi.delete(`/todo/delete/${todoId}`, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + cleanToken,
       },
     });
 
@@ -83,11 +114,15 @@ async function deleteTodo(todoId: string) {
 
 async function registerUser(user: User) {
   try {
-    const response = await axiosApi.post("/user/register", JSON.stringify(user), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axiosApi.post(
+      "/user/register",
+      JSON.stringify(user),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     toast.success(response?.data?.message);
   } catch (error) {
     handleError(error);
@@ -117,7 +152,15 @@ async function loginUser(user: Partial<User>) {
   }
 }
 
-export { fetchTodos, addTodo, updateCheckBox, deleteTodo, updateTodo, registerUser, loginUser };
+export {
+  fetchTodos,
+  addTodo,
+  updateCheckBox,
+  deleteTodo,
+  updateTodo,
+  registerUser,
+  loginUser,
+};
 
 // try {
 //   const todoBody = {

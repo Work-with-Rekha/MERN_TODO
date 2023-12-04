@@ -1,5 +1,5 @@
 import { BaseSyntheticEvent, FormEvent, useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { loginUser } from "../axios/api";
 import { AuthContext } from "../context/authContext";
 
@@ -17,8 +17,6 @@ const Login = () => {
 
   const { login } = useContext(AuthContext);
 
-  const navigate = useNavigate();
-
   const formSubmission = async (e: FormEvent) => {
     e.preventDefault();
     await loginUser(user).then((data) => {
@@ -30,7 +28,10 @@ const Login = () => {
       <h1 className="font-bold text-3xl">Sign In</h1>
 
       <div className="w-full">
-        <form className="flex flex-col gap-3 mx-32 px-10 py-5" onSubmit={formSubmission}>
+        <form
+          className="flex flex-col gap-3 mx-32 px-10 py-5"
+          onSubmit={formSubmission}
+        >
           <label htmlFor="email" className="flex flex-col ">
             Email:
             <input
